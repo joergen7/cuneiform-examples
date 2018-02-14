@@ -7,7 +7,11 @@ def range( first : Str, last : Str ) ->
       <number_lst : [Str]>
 
 in Octave *{
-  number_lst = [str( x ) for x in range( int( first ), int( last )+1 )]
+  a = str2num( first );
+  b = str2num( last );
+  m = a:b;
+  c = num2cell( m );
+  number_lst = cellfun( @num2str, c, 'UniformOutput', false );
 }*
 
 
@@ -15,7 +19,9 @@ def is_multiple( number : Str, divisor : Str ) ->
       <is_multiple : Bool>
 
 in Octave *{
-  is_multiple = int( number ) % int( divisor ) == 0
+  a = str2num( number );
+  b = str2num( divisor );
+  is_multiple = mod( a, b ) == 0;
 }*
 
 
