@@ -34,10 +34,10 @@ def string_list_eq( l1 : [Str], l2 : [Str] ) -> Bool {
 
 
 
-def output_bool() -> <out1 : Bool, out2 : Bool>
-in Python *{
-  out1=True
-  out2=False
+ def output_bool() -> <out1 : Bool, out2 : Bool>
+in Java *{
+  boolean out1 = true;
+  boolean out2 = false;
 }*
 
 let <out1 = c1 : Bool, out2 = d1 : Bool> =
@@ -55,14 +55,10 @@ let output_bool_test : Str =
 
 
 def input_bool( a : Bool, b : Bool ) -> <out : Str>
-in Python *{
-  if a:
-    if not b:
-      out='ok'
-    else:
-      exit( -1 )
-  else:
-    exit( -1 )
+in Java *{
+  String out = "ok";
+  if( !a || b )
+    throw new RuntimeException( "bad input string" );
 }*
 
 let <out = input_bool_test : Str> =
@@ -73,8 +69,8 @@ let <out = input_bool_test : Str> =
 
 
 def output_string() -> <out : Str>
-in Python *{
-  out = 'blub'
+in Java *{
+  String out = "blub";
 }*
 
 let <out = c2 : Str> = output_string();
@@ -94,11 +90,10 @@ let output_string_test : Str =
 
 
 def input_string( a : Str ) -> <out : Str>
-in Python *{
-  if a == 'blub':
-    out='ok'
-  else:
-    exit( -1 )
+in Java *{
+  String out = "ok";
+  if( !( a.equals( "blub" ) ) )
+    throw new RuntimeException( "bad input binding" );
 }*
 
 let <out = input_string_test : Str> =
@@ -107,8 +102,8 @@ let <out = input_string_test : Str> =
 
 
 def output_boolean_list() -> <out : [Bool]>
-in Python *{
-  out = [True, False, True]
+in Java *{
+  boolean[] out = {true, false, true };
 }*
 
 let <out = c3 : [Bool]> = output_boolean_list();
@@ -128,8 +123,8 @@ let output_boolean_list_test : Str =
 
 
 def output_string_list() -> <out : [Str]>
-in Python *{
-  out = ['a', 'b', 'c']
+in Java *{
+  String[] out = { "a", "b", "c" };
 }*
 
 let <out = c4 : [Str]> = output_string_list();
@@ -148,16 +143,21 @@ let output_string_list_test : Str =
 
 
 def write_file( inp : Str ) -> <f : File>
-in Python *{
-  f = 'out.txt'
-  with open( f, 'w') as the_file:
-    the_file.write( inp )
+in Java *{
+
+  String f = "out.txt";
+  try( BufferedWriter w = new BufferedWriter( new FileWriter( new File( f ) ) ) ) {
+    w.write( inp );
+    w.newLine();
+  }
 }*
 
 def read_file( f : File ) -> <out : Str>
-in Python *{
-  with open( f, 'r' ) as the_file:
-    out = the_file.readline()
+in Java *{
+  String out;
+  try( BufferedReader r = new BufferedReader( new FileReader( new File( f ) ) ) ) {
+    out = r.readLine();
+  }
 }*
 
 let c5 : Str = "blub";
