@@ -1,0 +1,46 @@
+def pick( lst : [Str] ) -> Str {
+  def pick( lst : [Str] ) -> <element : Str> in Python *{
+    import random
+    element = random.choice( lst )
+  }*
+  ( pick( lst = lst )|element )
+}
+
+def le( a : Str, b : Str ) -> Bool {
+  def le( a : Str, b : Str ) -> <isless : Bool> in Python *{
+      isless = a < b
+    }*
+  ( le( a = a, b = b )|isless )
+}
+
+def partition( lst : [Str], pivot : Str ) -> <lo-lst : [Str], hi-lst : [Str]> {
+  fold acc = <lo-lst = [: Str],
+              hi-lst = [: Str]>,
+       s <- lst
+  do
+    let <lo-lst = lo-lst : [Str],
+         hi-lst = hi-lst : [Str]> = acc;
+
+    if le( a = s, b = pivot )
+    then
+      <lo-lst = ( s : Str >> lo-lst ),
+       hi-lst = hi-lst>
+    else
+      <lo-lst = lo-lst,
+       hi-lst = ( s : Str >> hi-lst )>
+    end
+  end
+}
+
+def sort( lst : [Str] ) -> [Str] {
+
+  let pivot : Str =
+    pick( lst = lst );
+
+  let <lo-lst = lo-lst : [Str],
+       hi-lst = hi-lst : [Str]> =
+    partition( lst   = lst,
+               pivot = pivot );
+
+  ( sort( lst = lo-lst )+sort( lst = hi-lst ) )
+}
