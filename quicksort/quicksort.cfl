@@ -1,5 +1,6 @@
 def pick( lst : [Str] ) -> Str {
-  def pick( lst : [Str] ) -> <element : Str> in Python *{
+  def pick( lst : [Str] ) -> <element : Str>
+  in Python *{
     import random
     element = random.choice( lst )
   }*
@@ -7,13 +8,17 @@ def pick( lst : [Str] ) -> Str {
 }
 
 def le( a : Str, b : Str ) -> Bool {
-  def le( a : Str, b : Str ) -> <isless : Bool> in Python *{
+  def le( a : Str, b : Str ) -> <isless : Bool>
+  in Python *{
       isless = a < b
     }*
   ( le( a = a, b = b )|isless )
 }
 
-def partition( lst : [Str], pivot : Str ) -> <lo-lst : [Str], hi-lst : [Str]> {
+def partition( lst : [Str], pivot : Str ) ->
+  <lo-lst : [Str],
+   hi-lst : [Str]> {
+
   fold acc = <lo-lst = [: Str],
               hi-lst = [: Str]>,
        s <- lst
@@ -44,3 +49,8 @@ def sort( lst : [Str] ) -> [Str] {
 
   ( sort( lst = lo-lst )+sort( lst = hi-lst ) )
 }
+
+let lst : [Str] =
+  [9, 3, 8, 2, 3, 0, 5, 7, 3, 1, 7, 8, 4, 6 : Str];
+
+sort( lst = lst );
