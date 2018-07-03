@@ -40,18 +40,18 @@ def partition( lst : [Str], pivot : Str ) ->
     if( s == pivot )
     then
       <lo-lst = lo-lst,
-       eq-lst = ( s : Str >> eq-lst ),
+       eq-lst = ( s >> eq-lst ),
        hi-lst = hi-lst>
     else
       if le( a = s, b = pivot )
       then
-        <lo-lst = ( s : Str >> lo-lst ),
+        <lo-lst = ( s >> lo-lst ),
          eq-lst = eq-lst,
          hi-lst = hi-lst>
       else
         <lo-lst = lo-lst,
          eq-lst = eq-lst,
-         hi-lst = ( s : Str >> hi-lst )>
+         hi-lst = ( s >> hi-lst )>
       end
     end
   end
