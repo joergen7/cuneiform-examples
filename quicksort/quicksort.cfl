@@ -1,3 +1,11 @@
+def len( lst : [Str] ) -> Str {
+  def len( lst : [Str] ) -> <l : Str>
+  in Python *{
+    l = len( lst )
+  }*
+  ( len( lst = lst )|l )
+}
+
 def pick( lst : [Str] ) -> Str {
   def pick( lst : [Str] ) -> <element : Str>
   in Python *{
@@ -17,40 +25,61 @@ def le( a : Str, b : Str ) -> Bool {
 
 def partition( lst : [Str], pivot : Str ) ->
   <lo-lst : [Str],
+   eq-lst : [Str],
    hi-lst : [Str]> {
 
   fold acc = <lo-lst = [: Str],
+              eq-lst = [: Str],
               hi-lst = [: Str]>,
        s <- lst
   do
     let <lo-lst = lo-lst : [Str],
+         eq-lst = eq-lst : [Str],
          hi-lst = hi-lst : [Str]> = acc;
 
-    if le( a = s, b = pivot )
+    if( s == pivot )
     then
-      <lo-lst = ( s : Str >> lo-lst ),
+      <lo-lst = lo-lst,
+       eq-lst = ( s : Str >> eq-lst ),
        hi-lst = hi-lst>
     else
-      <lo-lst = lo-lst,
-       hi-lst = ( s : Str >> hi-lst )>
+      if le( a = s, b = pivot )
+      then
+        <lo-lst = ( s : Str >> lo-lst ),
+         eq-lst = eq-lst,
+         hi-lst = hi-lst>
+      else
+        <lo-lst = lo-lst,
+         eq-lst = eq-lst,
+         hi-lst = ( s : Str >> hi-lst )>
+      end
     end
   end
 }
 
 def sort( lst : [Str] ) -> [Str] {
 
-  let pivot : Str =
-    pick( lst = lst );
+  let l : Str = len( lst = lst );
 
-  let <lo-lst = lo-lst : [Str],
-       hi-lst = hi-lst : [Str]> =
-    partition( lst   = lst,
-               pivot = pivot );
+  if( ( l == 0 ) or ( l == 1 ) )
+  then
+    lst
+  else
 
-  ( sort( lst = lo-lst )+sort( lst = hi-lst ) )
+    let pivot : Str =
+      pick( lst = lst );
+
+    let <lo-lst = lo-lst : [Str],
+         eq-lst = eq-lst : [Str],
+         hi-lst = hi-lst : [Str]> =
+      partition( lst   = lst,
+                 pivot = pivot );
+
+    ( ( sort( lst = lo-lst )+eq-lst )+sort( lst = hi-lst ) )
+  end
 }
 
 let lst : [Str] =
-  [9, 3, 8, 2, 3, 0, 5, 7, 3, 1, 7, 8, 4, 6 : Str];
+  [9, 3, 8, 0, 8 : Str];
 
 sort( lst = lst );
