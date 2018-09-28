@@ -28,10 +28,13 @@ def partition( lst : [Str], pivot : Str ) ->
    eq-lst : [Str],
    hi-lst : [Str]> {
 
-  fold acc = <lo-lst = [: Str],
+  fold acc : <lo-lst : [Str],
+              eq-lst : [Str],
+              hi-lst : [Str]>
+           = <lo-lst = [: Str],
               eq-lst = [: Str],
               hi-lst = [: Str]>,
-       s <- lst
+       s : Str <- lst
   do
     let <lo-lst = lo-lst : [Str],
          eq-lst = eq-lst : [Str],

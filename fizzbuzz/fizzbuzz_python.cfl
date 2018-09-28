@@ -40,7 +40,7 @@ let <number_lst = number_lst : [Str]> =
 
 
 let fizzbuzz_lst : [Str] =
-  for x <- number_lst do
+  for x : Str <- number_lst do
 
     let <is_multiple = f : Bool> =
       is_multiple( number  = x,
