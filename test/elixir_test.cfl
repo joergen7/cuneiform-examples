@@ -34,10 +34,10 @@ def string_list_eq( l1 : [Str], l2 : [Str] ) -> Bool {
 
 
 
- def output_bool() -> <out1 : Bool, out2 : Bool>
-in Javascript *{
-  var out1 = true;
-  var out2 = false;
+def output_bool() -> <out1 : Bool, out2 : Bool>
+in Elixir *{
+  out1 = true
+  out2 = false
 }*
 
 let <out1 = c1 : Bool, out2 = d1 : Bool> =
@@ -55,11 +55,11 @@ let output_bool_test : Str =
 
 
 def input_bool( a : Bool, b : Bool ) -> <out : Str>
-in Javascript *{
-  var out = 'ok';
-  if( !a || b ) {
+in Elixir *{
+  out = "ok"
+  if !a || b do
     throw "bad input string";
-  }
+  end
 }*
 
 let <out = input_bool_test : Str> =
@@ -70,8 +70,8 @@ let <out = input_bool_test : Str> =
 
 
 def output_string() -> <out : Str>
-in Javascript *{
-  var out = "blub";
+in Elixir *{
+  out = "blub"
 }*
 
 let <out = c2 : Str> = output_string();
@@ -91,11 +91,11 @@ let output_string_test : Str =
 
 
 def input_string( a : Str ) -> <out : Str>
-in Javascript *{
-  var out = "ok";
-  if( !( a == 'blub' ) ) {
-    throw "bad input binding";
-  }
+in Elixir *{
+  out = "ok"
+  if a != "blub" do
+    throw "bad input binding"
+  end
 }*
 
 let <out = input_string_test : Str> =
@@ -104,8 +104,8 @@ let <out = input_string_test : Str> =
 
 
 def output_boolean_list() -> <out : [Bool]>
-in Javascript *{
-  var out = [ true, false, true ]
+in Elixir *{
+  out = [ true, false, true ];
 }*
 
 let <out = c3 : [Bool]> = output_boolean_list();
@@ -125,8 +125,8 @@ let output_boolean_list_test : Str =
 
 
 def output_string_list() -> <out : [Str]>
-in Javascript *{
-  var out = [ 'a', 'b', 'c' ];
+in Elixir *{
+  out = [ "a", "b", "c" ]
 }*
 
 let <out = c4 : [Str]> = output_string_list();
@@ -145,20 +145,16 @@ let output_string_list_test : Str =
 
 
 def write_file( inp : Str ) -> <f : File>
-in Javascript *{
-
-  const fs = require( 'fs' );
-  var f = 'out.txt';
-
-  fs.writeFileSync( f, inp )
+in Elixir *{
+  f = "out.txt"
+  {:ok, file} = File.open f, [:write]
+  IO.binwrite file, inp
+  File.close file
 }*
 
 def read_file( f : File ) -> <out : Str>
-in Javascript *{
-
-  const fs = require( 'fs' );
-  out = fs.readFileSync( f )
-
+in Elixir *{
+  {:ok, out} = File.read f
 }*
 
 let c5 : Str = "blub";
